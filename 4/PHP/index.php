@@ -151,9 +151,9 @@ $email = isset($_POST['email']) ? $_POST['email'] : '';
 $date = isset($_POST['date']) ? $_POST['date'] : '';
 $gender = isset($_POST['gender']) ? $_POST['gender'] : '';
 $biography = isset($_POST['biography']) ? $_POST['biography'] : '';
-  $user = 'u67444';
-    $pass = '4484182';
-    $db = new PDO('mysql:host=localhost;dbname=u67444', $user, $pass, array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"));
+  $user = 'u67309';
+    $pass = '1824692';
+    $db = new PDO('mysql:host=localhost;dbname=u67309', $user, $pass, array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"));
     $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
  
     foreach ($_POST['languages'] as $language) {
