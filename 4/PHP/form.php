@@ -77,7 +77,6 @@ if (!empty($messages)) {
             <div class="form_item form-group">
                 <label for="formMessage" style="color: black;">Биография:</label>
                 <textarea id="formMessage" name="biography" class="<?php if ($errors['biography']) {print 'error';} ?> form_input _req form-control w-50 shadow bg-white rounded"><?php print $values['biography']; ?></textarea>
-                    class="form_input _req form-control w-50 shadow bg-white rounded"></textarea>
             </div>
 
             <div class="form_item form-group">
