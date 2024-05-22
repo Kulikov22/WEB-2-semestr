@@ -25,8 +25,9 @@
         <form action="index.php" method="POST" class="row mx-5 my-2 gy-1">
             <div class="form_item form-group">
                 <label for="formName" style="color: black;">ФИО:</label>
-                <input name="names" class="<?php if ($errors['names']) {print 'error';} else {print 'group';} ?>" 
-       value="<?php print $values['names']; ?>" placeholder="Введите ФИО" />
+               <input name="names" class="form_input_req form-control w-50 shadow bg-white rounded <?php echo $errors['names'] ? 'error' : 'group'; ?>" 
+       value="<?php echo htmlspecialchars($values['names']); ?>" placeholder="Введите ФИО" />
+
             </div>
          <div class="form_item form-group">
                 <label for="formTel" style="color: black;">Телефон:</label>
@@ -51,6 +52,7 @@
     <input class="form-check-input" type="radio" name="gender" id="Sex2" value="W" <?php if ($values['gender'] == 'W') {echo 'checked';} ?>>
     <label class="form-check-label" for="Sex1">Женский</label>
 </div>
+<br>
      <div class="form_item form-group">
     <label for="multipleLanguages" style="color: black;">Любимый язык программирования:</label>
       <select class="group" name="languages[]" size="10" multiple>
