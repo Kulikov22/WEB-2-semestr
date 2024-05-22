@@ -31,12 +31,12 @@
          <div class="form_item form-group">
                 <label for="formTel" style="color: black;">Телефон:</label>
              <br>
-                <input name="phone" class="<?php if ($errors['phone']) {print 'class="group error"';} else print 'class="group"'; ?> value="<?php print $values['phone']; ?>" placeholder="Введите ФИО" />
+                <input name="phone" class="<?php if ($errors['phone']) {print 'class="group error"';} else print 'class="group"'; ?> value="<?php print $values['phone']; ?>" placeholder="Введите номер телефона" />
             </div>
         <div class="form_item form-group">
-      E-mail:
-        <br><input type="text" name="email" <?php if ($errors['email']) {print 'class="group error';} else print 'class="group"'; ?> value="<?php print $values['email']; ?>"><br>
-        </div>
+                <label for="formEmail" style="color: black;">E-mail:</label>
+               <input name="email" class="<?php if ($errors['email']) {print 'class="group error';} else print 'class="group"'; ?> value="<?php print $values['email']; ?>" placeholder="Введите email" />
+            </div>
         <div class="form_item form-group">
       Дата рождения:
         <input type="date" id="data" size="3" name="data" <?php if ($errors['data']) {print 'class="group error"';} else print 'class="group"';?> value="<?php print $values['data']; ?>">
