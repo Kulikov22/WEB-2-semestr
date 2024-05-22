@@ -47,9 +47,12 @@
     <input class="form-check-input" type="radio" name="gender" id="Sex1" value="M" <?php if ($values['gender'] == 'M') {echo 'checked';} ?>>
     <label class="form-check-label" for="Sex1">Мужской</label>
 </div>
-        <input class="radio" type="radio" name="gender" value="W" <?php if ($values['gender'] == 'W') {print 'checked';} ?>> Женский
-      </div>
-      Любимый язык программирования:<br>
+        <div class="form-check1 form-check-inline">
+    <input class="form-check-input" type="radio" name="gender" id="Sex2" value="W" <?php if ($values['gender'] == 'W') {echo 'checked';} ?>>
+    <label class="form-check-label" for="Sex1">Женский</label>
+</div>
+     <div class="form_item form-group">
+    <label for="multipleLanguages" style="color: black;">Любимый язык программирования:</label>
       <select class="group" name="languages[]" size="10" multiple>
         <option value="Pascal" <?php if (in_array("Pascal", $values['language'])) {print 'selected';} ?>>Pascal</option>
         <option value="C" <?php if (in_array("C", $values['language'])) {print 'selected';} ?>>C</option>
@@ -62,6 +65,7 @@
         <option value="Clojure" <?php if (in_array("Clojure", $values['language'])) {print 'selected';} ?>>Clojure</option>
         <option value="Prolog" <?php if (in_array("Prolog", $values['language'])) {print 'selected';} ?>>Prolog</option>
       </select>
+           </div>
       <br>
       Биография:<br><textarea class="group" name="biography" rows="3" cols="30"><?php print $values['biography']; ?></textarea>
       <div  <?php if ($errors['agree']) {print 'class="error"';} ?>>
