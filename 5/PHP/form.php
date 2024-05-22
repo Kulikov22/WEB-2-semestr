@@ -25,7 +25,7 @@
         <form action="index.php" method="POST" class="row mx-5 my-2 gy-1">
             <div class="form_item form-group">
                 <label for="formName" style="color: black;">ФИО:</label>
-                <input name="names" class="<?php if ($errors['names']) {print 'class="group error"';} else print 'class="group"'; ?> value="<?php print $values['names'];
+                <input name="names" class="<?php if ($errors['names']) {print 'class="group error"';} else print 'class="group"'; ?> value="<?php print $values['names'];?>
                 value="<?php print $values['names']; ?>" placeholder="Введите ФИО" />
             </div>
         <div class="form_item form-group">
