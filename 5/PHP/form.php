@@ -26,7 +26,7 @@
             <div class="form_item form-group">
                 <label for="formName" style="color: black;">ФИО:</label>
                 <input name="names" class="<?php if ($errors['names']) {print 'class="group error"';} else print 'class="group"'; ?> value="<?php print $values['names'];?>
-                value="<?php print $values['names']; ?>" placeholder="Введите ФИО" />
+               placeholder="Введите ФИО" />
             </div>
         <div class="form_item form-group">
       Телефон:<br><input type="tel" name="phone" <?php if ($errors['phone']) {print 'class="group error"';} else print 'class="group"'; ?> value="<?php print $values['phone']; ?>">
