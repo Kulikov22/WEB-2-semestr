@@ -41,8 +41,8 @@
                 <label for="formDate" style="color: black;">Дата рождения:</label><br>
                 <input type="date" class="<?php if ($errors['data']) {print 'class="group error"';} else print 'class="group"';?> value="<?php print $values['data']; ?>" placeholder="Введите дату рождения" />
       </div>
-      <div <?php if ($errors['gender']) {print 'class="error"';} ?>>
-        Пол:<br>
+      <div class="form_item form-group"<?php if ($errors['gender']) {print 'class="error"';} ?>>
+        <label style="color: black;">Пол:</label><br>
         <input class="radio" type="radio" name="gender" value="M" <?php if ($values['gender'] == 'M') {print 'checked';} ?>> Мужской
         <input class="radio" type="radio" name="gender" value="W" <?php if ($values['gender'] == 'W') {print 'checked';} ?>> Женский
       </div>
