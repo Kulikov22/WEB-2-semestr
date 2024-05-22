@@ -47,23 +47,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
         setcookie('agree_error', '', 100000);
         $messages[] = '<div>Поставьте галочку.</div>';
     }
+
     $values = array();
-$values['names'] = isset($_COOKIE['names_value']) ? strip_tags($_COOKIE['names_value']) : '';
-$values['phone'] = isset($_COOKIE['phone_value']) ? strip_tags($_COOKIE['phone_value']) : '';
-$values['email'] = isset($_COOKIE['email_value']) ? strip_tags($_COOKIE['email_value']) : '';
-$values['data'] = isset($_COOKIE['data_value']) ? $_COOKIE['data_value'] : '';
-$values['gender'] = isset($_COOKIE['gender_value']) ? $_COOKIE['gender_value'] : '';
-$values['biography'] = isset($_COOKIE['biography_value']) ? strip_tags($_COOKIE['biography_value']) : '';
-$values['agree'] = isset($_COOKIE['agree_value']) ? $_COOKIE['agree_value'] : ''; 
-if (empty($_COOKIE['language_value'])) {
-        $values['language'] = array();
-    } else {
-        $values['language'] = json_decode($_COOKIE['language_value'], true);  
-    }
-    $language = isset($language) ? $language : array();
-    if (!empty($_SESSION['login'])) {
-    printf('Вход с логином %s, uid %d', $_SESSION['login'], $_SESSION['uid']);
-}
+    $values['names'] = isset($_COOKIE['names_value']) ? strip_tags($_COOKIE['names_value']) : '';
+    $values['phone'] = isset($_COOKIE['phone_value']) ? strip_tags($_COOKIE['phone_value']) : '';
+    $values['email'] = isset($_COOKIE['email_value']) ? strip_tags($_COOKIE['email_value']) : '';
+    $values['data'] = isset($_COOKIE['data_value']) ? $_COOKIE['data_value'] : '';
+    $values['gender'] = isset($_COOKIE['gender_value']) ? $_COOKIE['gender_value'] : '';
+    $values['biography'] = isset($_COOKIE['biography_value']) ? strip_tags($_COOKIE['biography_value']) : '';
+    $values['agree'] = isset($_COOKIE['agree_value']) ? $_COOKIE['agree_value'] : ''; 
+    $values['language'] = isset($_COOKIE['language_value']) ? json_decode($_COOKIE['language_value'], true) : [];
+
     session_start();
     if (!empty($_COOKIE[session_name()]) && !empty($_SESSION['login'])) {
         $db = new PDO('mysql:host=localhost;dbname=u67439', 'u67309', '1824692', array(PDO::ATTR_PERSISTENT => true));
@@ -71,72 +65,68 @@ if (empty($_COOKIE['language_value'])) {
         $stmt->execute([$_SESSION['uid']]);
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
         $values['names'] = strip_tags($row['names']);
-        $values['phone'] = isset($_COOKIE['phone']) ? strip_tags($_COOKIE['phone']) : '';
+        $values['phone'] = strip_tags($row['phone']);
         $values['email'] = strip_tags($row['email']);
-        $values['data'] = isset($_COOKIE['data']) ? $_COOKIE['data'] : '';
+        $values['data'] = $row['data'];
         $values['gender'] = $row['gender'];
         $values['biography'] = strip_tags($row['biography']);
         $values['agree'] = true; 
-        $stmt = $db->prepare("SELECT * FROM languages WHERE id = ?");
+        $stmt = $db->prepare("SELECT name_of_language FROM application_languages WHERE id = ?");
         $stmt->execute([$_SESSION['uid']]);
-        $ability = array();
-        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-            $values['language'] = isset($_COOKIE['language_value']) ? json_decode($_COOKIE['language_value'], true) : array();
-        }
-        $values['language'] = $language;
-        printf('Вход с логином %s, uid %d', $_SESSION['login'], $_SESSION['uid']);
+        $values['language'] = $stmt->fetchAll(PDO::FETCH_COLUMN);
     }
+
     include('form.php');
 }
 else {
     $errors = FALSE;
-    if (empty(htmlentities($_POST['names']))) {
+    if (empty($_POST['names'])) {
         setcookie('names_error', '1', time() + 24 * 60 * 60);
         $errors = TRUE;
     } else {
         setcookie('names_value', $_POST['names'], time() + 12 * 30 * 24 * 60 * 60);
     }
+
     if (!preg_match('/^\+7 \(\d{3}\) \d{3}-\d{2}-\d{2}$/', $_POST['phone'])) {
         setcookie('phone_error', '1', time() + 24 * 60 * 60);
         $errors = TRUE;
     } else {
         setcookie('phone_value', $_POST['phone'], time() + 30 * 24 * 60 * 60);
     }
+
     if (!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
         setcookie('email_error', '1', time() + 24 * 60 * 60);
         $errors = TRUE;
     } else {
         setcookie('email_value', $_POST['email'], time() + 12 * 30 * 24 * 60 * 60);
     }
+
     if (empty($_POST['data'])) {
         setcookie('data_error', '1', time() + 24 * 60 * 60);
         $errors = TRUE;
     } else {
         setcookie('data_value', $_POST['data'], time() + 12 * 30 * 24 * 60 * 60);
     }
+
     if (empty($_POST['gender'])) {
         setcookie('gender_error', '1', time() + 24 * 60 * 60);
         $errors = TRUE;
     } else {
         setcookie('gender_value', $_POST['gender'], time() + 12 * 30 * 24 * 60 * 60);
     }
+
     if (empty($_POST['agree'])) {
         setcookie('agree_error', '1', time() + 24 * 60 * 60);
         $errors = TRUE;
     } else {
         setcookie('agree_value', $_POST['agree'], time() + 12 * 30 * 24 * 60 * 60);
     }
-    if (isset($_POST['language'])) {
-        $language = $_POST['language'];
-    } else {
-        $language = array(); 
-    }
+
+    $languages = isset($_POST['language']) ? $_POST['language'] : [];
+    setcookie('language_value', json_encode($languages), time() + 12 * 30 * 24 * 60 * 60);
+
     if (!empty($_POST['biography'])) {
-        setcookie ('biography_value', $_POST['biography'], time() + 12 * 30 * 24 * 60 * 60);
-    }
-    if (!empty($_POST['language'])) {
-        $json = json_encode($_POST['language']);
-        setcookie ('language_value', $json, time() + 12 * 30 * 24 * 60 * 60);
+        setcookie('biography_value', $_POST['biography'], time() + 12 * 30 * 24 * 60 * 60);
     }
 
     if ($errors) {
@@ -150,43 +140,43 @@ else {
         setcookie('gender_error', '', 100000);
         setcookie('agree_error', '', 100000);
     }
-    if (!empty($_COOKIE[session_name()]) &&
-        session_start() && !empty($_SESSION['login'])) {
+
+    session_start();
+    if (!empty($_COOKIE[session_name()]) && !empty($_SESSION['login'])) {
         $db = new PDO('mysql:host=localhost;dbname=u67309', 'u67309', '1824692', array(PDO::ATTR_PERSISTENT => true));
-        $stmt = $db->prepare("UPDATE application SET names = ?, phones = ?, email = ?, data = ?, gender = ?, biography = ? WHERE id = ?");
+        $stmt = $db->prepare("UPDATE application SET names = ?, phone = ?, email = ?, data = ?, gender = ?, biography = ? WHERE id = ?");
         $stmt->execute([$_POST['names'], $_POST['phone'], $_POST['email'], $_POST['data'], $_POST['gender'], $_POST['biography'], $_SESSION['uid']]);
-        $stmt = $db->prepare("DELETE FROM languages WHERE id = ?");
+        $stmt = $db->prepare("DELETE FROM application_languages WHERE id = ?");
         $stmt->execute([$_SESSION['uid']]);
-        $ability = $_POST['language'];
-        foreach ($language as $item) {
-            $stmt = $db->prepare("INSERT INTO application_languages SET id = ?, name_of_language = ?");
-            $stmt->execute([$_SESSION['uid'], $item]);
+        $stmt = $db->prepare("INSERT INTO application_languages (id, name_of_language) VALUES (?, ?)");
+        foreach ($languages as $language) {
+            $stmt->execute([$_SESSION['uid'], $language]);
         }
     } else {
-        $chars="qazxswedcvfrtgbnhyujmkiolp1234567890QAZXSWEDCVFRTGBNHYUJMKIOLP";
-        $max=rand(8,16);
-        $size=StrLen($chars)-1;
-        $pass=null;
-        while($max--)
-            $pass.=$chars[rand(0,$size)];
-        $login = $chars[rand(0,25)] . strval(time());
+        $login = 'u' . substr(uniqid(), -5);
+        $password = substr(md5(uniqid()), 0, 15); // Пароль должен быть не длиннее, чем максимальная длина в базе данных
+
+        $hash = password_hash($password, PASSWORD_BCRYPT);
         setcookie('login', $login);
-        setcookie('pass', $pass);
-        $db = new PDO('mysql:host=localhost;dbname=u67309', 'u67309', '1824692', array(PDO::ATTR_PERSISTENT => true));
-        $stmt = $db->prepare("INSERT INTO application SET names = ?, phones = ?, email = ?, dates = ?, gender = ?, biography = ?");
-        $stmt->execute([$_POST['names'], $_POST['phone'], $_POST['email'], $_POST['data'], $_POST['gender'], $_POST['biography']]);
-        $res = $db->query("SELECT max(id) FROM application");
-        $row = $res->fetch();
-        $count = (int) $row[0];
-        $ability = $_POST['language'];
-        foreach ($language as $item) {
-            $stmt = $db->prepare("INSERT INTO application_languages SET id = ?, name_of_language = ?");
-            $stmt->execute([$count, $item]);
+        setcookie('pass', $password);
+
+        try {
+            $db = new PDO('mysql:host=localhost;dbname=u67309', 'u67309', '1824692', array(PDO::ATTR_PERSISTENT => true));
+            $stmt = $db->prepare("INSERT INTO application (names, phone, email, data, gender, biography) VALUES (?, ?, ?, ?, ?, ?)");
+            $stmt->execute([$_POST['names'], $_POST['phone'], $_POST['email'], $_POST['data'], $_POST['gender'], $_POST['biography']]);
+            $id = $db->lastInsertId();
+            $stmt = $db->prepare("INSERT INTO application_languages (id, name_of_language) VALUES (?, ?)");
+            foreach ($languages as $language) {
+                $stmt->execute([$id, $language]);
+            }
+            $stmt = $db->prepare("INSERT INTO login_pass (id, login, pass) VALUES (?, ?, ?)");
+            $stmt->execute([$id, $login, $hash]);
+        } catch (PDOException $e) {
+            print('Error : ' . $e->getMessage());
+            exit();
         }
-        $stmt = $db->prepare("INSERT INTO login_pass SET id = ?, login = ?, pass = ?");
-        $stmt->execute([$count, $login, md5($pass)]);
     }
     setcookie('save', '1');
-    header('Location: ./');
+    header('Location: index.php');
 }
 ?>
