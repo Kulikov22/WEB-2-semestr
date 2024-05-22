@@ -1,64 +1,65 @@
 body {
-    font-size: 12px;
-    align-content: center;
+    font-family: Arial, sans-serif; 
+    background-color: #97a4d4;; 
 }
 
-.fon1 {
-    width: 90%;
-    margin: auto;
-    background-color: #dbd18a;
-    border: 2px solid #000000;
+h2{text-align: center;}
+
+input[type="text"],
+input[type="tel"],
+input[type="email"],
+input[type="date"],
+textarea,
+select {
+    width: 100%; 
+    padding: 10px; 
+    margin-bottom: 15px; 
+    border: 1px solid #ccc; 
+    border-radius: 5px; 
+    box-sizing: border-box; 
 }
 
-.submit {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 80px;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    font-weight: 700;
-    border-radius: 20px;
-    background-color: rgb(0 0 0 / 72%);
+input[type="radio"],
+input[type="checkbox"] {
+    margin-right: 5px; 
 }
 
 label {
-    overflow-wrap: break-word;
+    font-weight: bold; 
 }
 
-.w-50 {
-    width: 100% !important;
-    min-height: 30px;
+.submit {
+    padding: 10px 20px; 
+    background-color: #390a59; 
+    color: #fff; 
+    border: none; 
+    border-radius: 5px; 
+    cursor: pointer; 
 }
-    
-option {
-    font-size: 20px;
+
+.submit:hover {
+    background-color: #ad00b3; 
+}
+.error {
+    border-color: red; 
 }
 
-@media (min-width: 767px) {
-    body {
-        font-size: 20px;
-        background-color: (#577aee);
-    }
+input[name="names"] {
+    border: 1px solid #ced4da; 
+    border-radius: 4px; 
+    padding: 8px; 
+    width: 100%; 
+    box-sizing: border-box; 
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out; 
+}
 
-    .fon1 {
-        width: 70%;
-    }
+input[name="names"]:focus {
+    border-color: #80bdff; 
+    outline: 0; 
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25); 
+}
 
-    .submit {
-        width: 50%;
-    }
 
-    option {
-        font-size: 18px;
-    }
-
-    .w-50 {
-        width: 50% !important;
-    }
-
-    .form_item {
-        padding-left: 30%;
-    }
+input[name="names"][names="error"] {
+    border-color: red; 
 }
