@@ -38,9 +38,10 @@
     <input name="email" class="group <?php echo $errors['email'] ? 'error' : ''; ?>" value="<?php echo htmlspecialchars($values['email']); ?>" placeholder="Введите email" />
 </div>
 <div class="form_item form-group">
-    <label for="formDate" style="color: black;">Дата рождения:</label><br>
-    <input type="date" class="group <?php echo $errors['data'] ? 'error' : ''; ?>" value="<?php echo htmlspecialchars($values['data']); ?>" placeholder="Введите дату рождения" />
-</div>
+                <label for="formDate" style="color: black;">Дата рождения:</label><br>
+                <input type="date" class="<?php if ($errors['data']) {print 'class="group error"';} else print 'class="group"';?> value="<?php print $values['data']; ?>" placeholder="Введите дату рождения" />
+      </div>
+
       <div class="form_item form-group"<?php if ($errors['gender']) {print 'class="error"';} ?>>
         <label style="color: black;">Пол:</label><br>
          <div class="form-check1 form-check-inline">
