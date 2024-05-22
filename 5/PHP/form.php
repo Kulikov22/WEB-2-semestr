@@ -30,6 +30,7 @@
             </div>
          <div class="form_item form-group">
                 <label for="formTel" style="color: black;">Телефон:</label>
+             <br>
                 <input name="phone" class="<?php if ($errors['phone']) {print 'class="group error"';} else print 'class="group"'; ?> value="<?php print $values['phone']; ?>" placeholder="Введите ФИО" />
             </div>
         <div class="form_item form-group">
