@@ -5,6 +5,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Задание 5</title>
+     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
     <link rel="stylesheet" href="style.css">
 </head>
 
@@ -19,17 +21,23 @@
     }
   ?>
 
-  <div class="container">
-    <h2>Форма</h2>
-    <form action="" method="POST">
-      Имя:<br><input type="text" name="names" <?php if ($errors['names']) {print 'class="group error"';} else print 'class="group"'; ?> value="<?php print $values['names']; ?>">
-      <br>
+   <div class="fon1 tab mt-4 mb-4 shadow rounded" id="quf">
+        <form action="index.php" method="POST" class="row mx-5 my-2 gy-1">
+            <div class="form_item form-group">
+                <label for="formName" style="color: black;">ФИО:</label>
+                <input name="names" class="<?php if ($errors['names']) {print 'class="group error"';} else print 'class="group"'; ?> value="<?php print $values['names']; ?>">form_input _req form-control w-50 shadow bg-white rounded"
+                value="<?php print $values['names']; ?>" placeholder="Введите ФИО" />
+            </div>
+        <div class="form_item form-group">
       Телефон:<br><input type="tel" name="phone" <?php if ($errors['phone']) {print 'class="group error"';} else print 'class="group"'; ?> value="<?php print $values['phone']; ?>">
       <br>
+        </div>
+        <div class="form_item form-group">
       E-mail:
         <br><input type="text" name="email" <?php if ($errors['email']) {print 'class="group error';} else print 'class="group"'; ?> value="<?php print $values['email']; ?>"><br>
+        </div>
+        <div class="form_item form-group">
       Дата рождения:
-      <div class="form-group">
         <input type="date" id="data" size="3" name="data" <?php if ($errors['data']) {print 'class="group error"';} else print 'class="group"';?> value="<?php print $values['data']; ?>">
       </div>
       <div <?php if ($errors['gender']) {print 'class="error"';} ?>>
