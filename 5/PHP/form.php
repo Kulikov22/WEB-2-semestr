@@ -27,12 +27,11 @@
                 <label for="formName" style="color: black;">ФИО:</label>
                 <input name="names" class="<?php if ($errors['names']) {print 'error';} else {print 'group';} ?>" 
        value="<?php print $values['names']; ?>" placeholder="Введите ФИО" />
-
             </div>
-        <div class="form_item form-group">
-      Телефон:<br><input type="tel" name="phone" <?php if ($errors['phone']) {print 'class="group error"';} else print 'class="group"'; ?> value="<?php print $values['phone']; ?>">
-      <br>
-        </div>
+         <div class="form_item form-group">
+                <label for="formTel" style="color: black;">Телефон:</label>
+                <input name="phone" class="<?php if ($errors['phone']) {print 'class="group error"';} else print 'class="group"'; ?> value="<?php print $values['phone']; ?>" placeholder="Введите ФИО" />
+            </div>
         <div class="form_item form-group">
       E-mail:
         <br><input type="text" name="email" <?php if ($errors['email']) {print 'class="group error';} else print 'class="group"'; ?> value="<?php print $values['email']; ?>"><br>
