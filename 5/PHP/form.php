@@ -43,7 +43,11 @@
       </div>
       <div class="form_item form-group"<?php if ($errors['gender']) {print 'class="error"';} ?>>
         <label style="color: black;">Пол:</label><br>
-        <input class="radio" type="radio" name="gender" value="M" <?php if ($values['gender'] == 'M') {print 'checked';} ?>> Мужской
+         <div class="form-check1 form-check-inline">
+                    <input class="form-check-input" type="radio" name="gender" id="Sex1" value="M">
+                    <label class="form-check-label" for="Sex1">Мужской</label>
+                <?php if ($values['gender'] == 'M') {print 'checked';} ?>> Мужской
+             </div>
         <input class="radio" type="radio" name="gender" value="W" <?php if ($values['gender'] == 'W') {print 'checked';} ?>> Женский
       </div>
       Любимый язык программирования:<br>
