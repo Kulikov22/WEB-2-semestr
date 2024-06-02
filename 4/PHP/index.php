@@ -128,15 +128,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
         header('Location: index.php');
         exit();
     } else {
-        setcookie('names_error', '', 100000);
-        setcookie('email_error', '', 100000);
-        setcookie('date_error', '', 100000);
-        setcookie('phone_error', '', 100000);
-        setcookie('gender_error', '', 100000);
-        setcookie('biography_error', '', 100000);
-        setcookie('agree_error', '', 100000);
-        setcookie('languages_error', '', 100000);
-
-        echo 'Спасибо, данные сохранены!';
+        foreach ($_COOKIE as $cookie_name => $cookie_value) {
+            if (strpos($cookie_name, '_error') !== false) {
+                setcookie($cookie_name, '', 100000);
+            }
+        }
+        $messages[] = 'Данные успешно сохранены.';
     }
+
+    setcookie('save', '1');
+    header('Location: index.php');
 }
+?>
