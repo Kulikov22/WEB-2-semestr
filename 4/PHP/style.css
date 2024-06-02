@@ -42,8 +42,10 @@ input[type="submit"]:hover {
 }
 
 .error {
-    border-color: red;
+    border: 2px solid red;
+    background-color: #ffcccc;
 }
+
 
 #messages {
     background-color: #f8d7da;
