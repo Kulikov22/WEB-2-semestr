@@ -42,10 +42,8 @@ input[type="submit"]:hover {
 }
 
 .error {
-    border: 2px solid red;
-    background-color: #ffcccc;
+    border-color: red;
 }
-
 
 #messages {
     background-color: #f8d7da;
@@ -102,27 +100,5 @@ input[type="submit"]:hover {
 .checkbox_input {
     position: relative;
     display: block;
-    margin-bottom: 10px;
-}
-
-.submit {
-    display: inline-block;
-    font-weight: 400;
-    color: #212529;
-    text-align: center;
-    vertical-align: middle;
-    cursor: pointer;
-    background-color: #e2e6ea;
-    border: 1px solid #dae0e5;
-    padding: .375rem .75rem;
-    font-size: 1rem;
-    line-height: 1.5;
-    border-radius: .25rem;
-    transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
-}
-
-.submit:hover {
-    color: #212529;
-    background-color: #d6d8db;
-    border-color: #c6c8ca;
+    margin-bottom: 15px;
 }
