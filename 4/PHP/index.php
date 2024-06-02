@@ -154,6 +154,11 @@ else {
   $db = new PDO('mysql:host=localhost;dbname=u67309', $user, $pass, array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"));
   $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
  
+  // Отладочная информация
+  echo "<pre>";
+  print_r($_POST['languages']);
+  echo "</pre>";
+
   foreach ($_POST['languages'] as $language) {
     $stmt = $db->prepare("SELECT id FROM languages WHERE id= :id");
     $stmt->bindParam(':id', $language);
@@ -165,8 +170,8 @@ else {
   }
  
   try {
-    $stmt = $db->prepare("INSERT INTO application (names,phones,email,dates,gender,biography)" . "VALUES (:names,:phone,:email,:date,:gender,:biography)");
-    $stmt->execute(array('names' => $names, 'phone' => $phone, 'email' => $email, 'date' => $date, 'gender' => $gender, 'biography' => $biography));
+    $stmt = $db->prepare("INSERT INTO application (names,phones,email,dates,gender,biography) VALUES (:names, :phones, :email, :dates, :gender, :biography)");
+    $stmt->execute(array('names' => $names, 'phones' => $phone, 'email' => $email, 'dates' => $date, 'gender' => $gender, 'biography' => $biography));
     $id = $db->lastInsertId();
     foreach ($_POST['languages'] as $language) {
       $stmt = $db->prepare("INSERT INTO languages_app (app_id,languages_id) VALUES (:app_id,:languages_id)");
