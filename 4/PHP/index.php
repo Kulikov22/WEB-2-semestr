@@ -28,7 +28,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     $messages[] = '<div class="error">Заполните телефон.</div>';
   }
  
-  
   if ($errors['email']) {
     setcookie('email_error', '', 100000);
     setcookie('email_value', '', 100000);
@@ -65,16 +64,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     $messages[] = '<div class="error">Заполните соглашение.</div>';
   }
  
-$values = array();
+  $values = array();
   $values['names'] = empty($_COOKIE['names_value']) ? '' : $_COOKIE['names_value'];
   $values['phone'] = empty($_COOKIE['phone_value']) ? '' : $_COOKIE['phone_value'];
   $values['email'] = empty($_COOKIE['email_value']) ? '' : $_COOKIE['email_value'];
   $values['date'] = empty($_COOKIE['date_value']) ? '' : $_COOKIE['date_value'];
   $values['gender'] = empty($_COOKIE['gender_value']) ? '' : $_COOKIE['gender_value'];
-  $values['languages'] = empty($_COOKIE['languages_value']) ? '' : $_COOKIE['languages_value'];
-  $values['biography'] = empty($_COOKIE['biography_value']) ? '' : $_COOKIE['biography_value'];
-  $values['agree'] = empty($_COOKIE['agree_value']) ? '' : $_COOKIE['agree_value'];
   $values['languages'] = empty($_COOKIE['languages_value']) ? '' : explode(',', $_COOKIE['languages_value']);
+  $values['biography'] = empty($_COOKIE['biography_value']) ? '' : $_COOKIE['biography_value'];
   $values['agree'] = empty($_COOKIE['agree_value']) ? '' : ($_COOKIE['agree_value'] === '1');
  
   include('form.php');
@@ -114,9 +111,10 @@ else {
     if (empty($_POST['languages'])) {
         setcookie('languages_error', '1', time() + 24 * 60 * 60);
         $errors = TRUE;
+    } else {
+        $language_string = implode(",", $_POST['languages']);
+        setcookie('languages_value', $language_string, time() + 30 * 24 * 60 * 60);
     }
-    $language_string = implode(",", $_POST['languages']);
-    setcookie('languages_value', $language_string, time() + 30 * 24 * 60 * 60);
 
     if (empty($_POST['biography'])) {
         setcookie('biography_error', '1', time() + 24 * 60 * 60);
@@ -127,8 +125,9 @@ else {
     if (empty($_POST['agree'])) {
         setcookie('agree_error', '1', time() + 24 * 60 * 60);
         $errors = TRUE;
+    } else {
+        setcookie('agree_value', '1', time() + 30 * 24 * 60 * 60);
     }
-    setcookie('agree_value', $_POST['agree'], time() + 30 * 24 * 60 * 60);
 
     if ($errors) {
         header('Location: index.php');
@@ -156,7 +155,7 @@ else {
     $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
     try {
-        $stmt = $db->prepare("INSERT INTO application (names,phones,email,dates,gender,biography)" . "VALUES (:names,:phone,:email,:date,:gender,:biography)");
+        $stmt = $db->prepare("INSERT INTO application (names, phones, email, dates, gender, biography) VALUES (:names, :phone, :email, :date, :gender, :biography)");
         $stmt->execute(array('names' => $names, 'phone' => $phone, 'email' => $email, 'date' => $date, 'gender' => $gender, 'biography' => $biography));
         $applicationId = $db->lastInsertId();
 
@@ -176,3 +175,4 @@ else {
     setcookie('save', '1');
     header('Location: index.php');
 }
+?>
