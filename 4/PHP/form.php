@@ -9,6 +9,34 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
     <link rel="stylesheet" href="style.css">
+    <style>
+        .error {
+            border: 2px solid red;
+        }
+    </style>
+    <script>
+        function validateForm(event) {
+            let isValid = true;
+            const requiredFields = document.querySelectorAll('input._req, select._req, textarea._req');
+            requiredFields.forEach(field => {
+                if (!field.value || (field.type === 'checkbox' && !field.checked)) {
+                    field.classList.add('error');
+                    isValid = false;
+                } else {
+                    field.classList.remove('error');
+                }
+            });
+
+            if (!isValid) {
+                event.preventDefault();
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const form = document.querySelector('form');
+            form.addEventListener('submit', validateForm);
+        });
+    </script>
 </head>
 
 <body>
@@ -50,14 +78,14 @@
             <div class="form_item form-group">
                 <label style="color: black;">Пол:</label><br>
                 <div class="form-check1 form-check-inline">
-                    <input class="form-check-input" type="radio" name="gender" id="Sex1" value="m" <?php if ($values['gender'] == 'm') {print 'checked';} ?>>
+                    <input class="form-check-input _req" type="radio" name="gender" id="Sex1" value="m" <?php if ($values['gender'] == 'm') {print 'checked';} ?>>
                     <label class="form-check-label" for="Sex1">Мужской</label>
                 </div>
                 <div class="form-check1 form-check-inline">
-                    <input class="form-check-input" type="radio" name="gender" id="Sex2" value="f" <?php if ($values['gender'] == 'f') {print 'checked';} ?>>
+                    <input class="form-check-input _req" type="radio" name="gender" id="Sex2" value="f" <?php if ($values['gender'] == 'f') {print 'checked';} ?>>
                     <label class="form-check-label" for="Sex2">Женский</label>
                 </div>
-            </div>            
+            </div>
 
             <div class="form_item form-group">
                 <label for="multipleLanguages" style="color: black;">Любимый язык программирования:</label>
@@ -82,7 +110,7 @@
             <div class="form_item form-group">
                 <div class="form-check">
                     <label class="checkbox_label form-check-label" for="agree">С контрактом ознакомлен(а)</label>
-                    <input id="agree" type="checkbox" name="agree" class="<?php if ($errors['agree']) {print 'error';} ?> checkbox_input form-check-input" <?php if ($values['agree']) {print 'checked';} ?>>
+                    <input id="agree" type="checkbox" name="agree" class="<?php if ($errors['agree']) {print 'error';} ?> checkbox_input form-check-input _req" <?php if ($values['agree']) {print 'checked';} ?>>
                 </div>
             </div>
             
