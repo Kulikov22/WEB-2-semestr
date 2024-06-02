@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="ru">
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -10,7 +9,6 @@
         integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
     <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
     <?php
 if (!empty($messages)) {
@@ -50,29 +48,29 @@ if (!empty($messages)) {
             <div class="form_item form-group">
                 <label style="color: black;">Пол:</label><br>
                 <div class="form-check1 form-check-inline">
-                    <input class="form-check-input" type="radio" name="gender" id="Sex1" value="m">
+                    <input class="form-check-input" type="radio" name="gender" id="Sex1" value="m" <?php if ($values['gender'] == 'm') {print 'checked';} ?>>
                     <label class="form-check-label" for="Sex1">Мужской</label>
                 </div>
                 <div class="form-check1 form-check-inline">
-                    <input class="form-check-input" type="radio" name="gender" id="Sex2" value="f">
+                    <input class="form-check-input" type="radio" name="gender" id="Sex2" value="f" <?php if ($values['gender'] == 'f') {print 'checked';} ?>>
                     <label class="form-check-label" for="Sex2">Женский</label>
                 </div>
             </div>            
 
             <div class="form_item form-group">
-    <label for="multipleLanguages" style="color: black;">Любимый язык программирования:</label>
-    <select multiple class="<?php if ($errors['languages']) {print 'error';} ?> form_input _req form-control w-50 shadow bg-white rounded"
-    id="multipleLanguages" name="languages[]">
-        <option value="1">Pascal</option>
-        <option value="2">C</option>
-        <option value="3">C++</option>
-        <option value="4">JavaScript</option>
-        <option value="5">PHP</option>          
-        <option value="6">Python</option>
-        <option value="7">Java</option>
-        <option value="8">Haskel</option>
-    </select>
-</div>
+                <label for="multipleLanguages" style="color: black;">Любимый язык программирования:</label>
+                <select multiple class="<?php if ($errors['languages']) {print 'error';} ?> form_input _req form-control w-50 shadow bg-white rounded"
+                id="multipleLanguages" name="languages[]">
+                    <option value="1" <?php if (in_array('1', $values['languages'])) {print 'selected';} ?>>Pascal</option>
+                    <option value="2" <?php if (in_array('2', $values['languages'])) {print 'selected';} ?>>C</option>
+                    <option value="3" <?php if (in_array('3', $values['languages'])) {print 'selected';} ?>>C++</option>
+                    <option value="4" <?php if (in_array('4', $values['languages'])) {print 'selected';} ?>>JavaScript</option>
+                    <option value="5" <?php if (in_array('5', $values['languages'])) {print 'selected';} ?>>PHP</option>
+                    <option value="6" <?php if (in_array('6', $values['languages'])) {print 'selected';} ?>>Python</option>
+                    <option value="7" <?php if (in_array('7', $values['languages'])) {print 'selected';} ?>>Java</option>
+                    <option value="8" <?php if (in_array('8', $values['languages'])) {print 'selected';} ?>>Haskel</option>
+                </select>
+            </div>
 
             <div class="form_item form-group">
                 <label for="formMessage" style="color: black;">Биография:</label>
@@ -82,7 +80,7 @@ if (!empty($messages)) {
             <div class="form_item form-group">
                 <div class="form-check">
                     <label class="checkbox_label form-check-label" for="agree">С контрактом ознакомлен(а)</label>
-                     <input id="agree" type="checkbox" name="agree" class="<?php if ($errors['agree']) {print 'error';} ?> checkbox_input form-check-input">
+                     <input id="agree" type="checkbox" name="agree" class="<?php if ($errors['agree']) {print 'error';} ?> checkbox_input form-check-input" <?php if ($values['agree']) {print 'checked';} ?>>
                 </div>
             </div>
             
