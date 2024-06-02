@@ -1,4 +1,3 @@
-
 <?php
 header('Content-Type: text/html; charset=UTF-8');
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
@@ -29,7 +28,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     $messages[] = '<div class="error">Заполните телефон.</div>';
   }
  
-  
   if ($errors['email']) {
     setcookie('email_error', '', 100000);
     setcookie('email_value', '', 100000);
@@ -66,7 +64,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     $messages[] = '<div class="error">Заполните соглашение.</div>';
   }
  
-$values = array();
+  $values = array();
   $values['names'] = empty($_COOKIE['names_value']) ? '' : $_COOKIE['names_value'];
   $values['phone'] = empty($_COOKIE['phone_value']) ? '' : $_COOKIE['phone_value'];
   $values['email'] = empty($_COOKIE['email_value']) ? '' : $_COOKIE['email_value'];
@@ -86,7 +84,7 @@ else {
     setcookie('names_error', '1', time() + 24 * 60 * 60);
     $errors = TRUE;
   }
-setcookie('names_value', $_POST['names'], time() + 30 * 24 * 60 * 60);
+  setcookie('names_value', $_POST['names'], time() + 30 * 24 * 60 * 60);
   if (empty($_POST['phone'])) {
     setcookie('phone_error', '1', time() + 24 * 60 * 60);
     $errors = TRUE;
@@ -111,14 +109,14 @@ setcookie('names_value', $_POST['names'], time() + 30 * 24 * 60 * 60);
   }
   setcookie('gender_value', $_POST['gender'], time() + 30 * 24 * 60 * 60);
  
-  if (empty($_POST['languages'])) {
+  if (empty($_POST['languages']) || !is_array($_POST['languages'])) {
     setcookie('languages_error', '1', time() + 24 * 60 * 60);
     $errors = TRUE;
+  } else {
+    $language_string = implode(",", $_POST['languages']);
+    setcookie('languages_value', $language_string, time() + 30 * 24 * 60 * 60);
   }
-  $language_string = implode(",", $_POST['languages']);
-  setcookie('languages_value', $language_string, time() + 30 * 24 * 60 * 60);
-  $languages_array = explode(",", $_COOKIE['languages_value']);
- 
+  
   if (empty($_POST['biography'])) {
     setcookie('biography_error', '1', time() + 24 * 60 * 60);
     $errors = TRUE;
@@ -145,59 +143,40 @@ setcookie('names_value', $_POST['names'], time() + 30 * 24 * 60 * 60);
     setcookie('biography_error', '', 100000);
     setcookie('agree_error', '', 100000);
   }
-$names = isset($_POST['names']) ? $_POST['names'] : '';
-$phone = isset($_POST['phone']) ? $_POST['phone'] : '';
-$email = isset($_POST['email']) ? $_POST['email'] : '';
-$date = isset($_POST['date']) ? $_POST['date'] : '';
-$gender = isset($_POST['gender']) ? $_POST['gender'] : '';
-$biography = isset($_POST['biography']) ? $_POST['biography'] : '';
+  $names = isset($_POST['names']) ? $_POST['names'] : '';
+  $phone = isset($_POST['phone']) ? $_POST['phone'] : '';
+  $email = isset($_POST['email']) ? $_POST['email'] : '';
+  $date = isset($_POST['date']) ? $_POST['date'] : '';
+  $gender = isset($_POST['gender']) ? $_POST['gender'] : '';
+  $biography = isset($_POST['biography']) ? $_POST['biography'] : '';
   $user = 'u67309';
-    $pass = '1824692';
-    $db = new PDO('mysql:host=localhost;dbname=u67309', $user, $pass, array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"));
-    $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+  $pass = '1824692';
+  $db = new PDO('mysql:host=localhost;dbname=u67309', $user, $pass, array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"));
+  $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
  
+  foreach ($_POST['languages'] as $language) {
+    $stmt = $db->prepare("SELECT id FROM languages WHERE id= :id");
+    $stmt->bindParam(':id', $language);
+    $stmt->execute();
+    if ($stmt->rowCount() == 0) {
+      print('Ошибка при добавлении языка.<br/>');
+      exit();
+    }
+  }
+ 
+  try {
+    $stmt = $db->prepare("INSERT INTO application (names,phones,email,dates,gender,biography)" . "VALUES (:names,:phone,:email,:date,:gender,:biography)");
+    $stmt->execute(array('names' => $names, 'phone' => $phone, 'email' => $email, 'date' => $date, 'gender' => $gender, 'biography' => $biography));
+    $id = $db->lastInsertId();
     foreach ($_POST['languages'] as $language) {
-        $stmt = $db->prepare("SELECT id FROM languages WHERE id= :id");
-        $stmt->bindParam(':id', $language);
-        $stmt->execute();
-        if ($stmt->rowCount() == 0) {
-          print('Ошибка при добавлении языка.<br/>');
-          exit();
-        }
+      $stmt = $db->prepare("INSERT INTO languages_app (app_id,languages_id) VALUES (:app_id,:languages_id)");
+      $stmt->execute(array('app_id' => $id, 'languages_id' => $language));
     }
- 
-    try {
-        $stmt = $db->prepare("INSERT INTO application (names,phones,email,dates,gender,biography)" . "VALUES (:names,:phone,:email,:date,:gender,:biography)");
-        $stmt->execute(array('names' => $names, 'phone' => $phone, 'email' => $email, 'date' => $date, 'gender' => $gender, 'biography' => $biography));
-        $applicationId = $db->lastInsertId();
-      
-        foreach ($_POST['languages'] as $language) {
-            $stmt = $db->prepare("SELECT id FROM languages WHERE id = :id");
-            $stmt->bindParam(':id', $language);
-            $stmt->execute();
-            $languageRow = $stmt->fetch(PDO::FETCH_ASSOC);
-        
-            if ($languageRow) {
-                $languageId = $languageRow['id'];
-        
-                $stmt = $db->prepare("INSERT INTO application_languages (id_lang, id_app) VALUES (:languageId, :applicationId)");
-                $stmt->bindParam(':languageId', $languageId);
-                $stmt->bindParam(':applicationId', $applicationId);
-                $stmt->execute();
-            } else {
-                print('Ошибка: Не удалось найти ID для языка программирования: ' . $language . '<br/>');
-                exit();
-            }
-        }
-            
-        print('Спасибо, форма сохранена.');
-    }
- 
-    catch(PDOException $e){
-        print('Error : ' . $e->getMessage());
-        exit();
-    }
+  } catch (PDOException $e) {
+    print('Error : ' . $e->getMessage());
+    exit();
+  }
   setcookie('save', '1');
- 
   header('Location: index.php');
 }
+?>
