@@ -1,96 +1,55 @@
 <!DOCTYPE html>
 <html lang="ru">
-
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Форма</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
     <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
-    <?php
-    if (!empty($messages)) {
-        print('<div id="messages">');
-        foreach ($messages as $message) {
-            print($message);
+    <div class="container">
+        <?php
+        if (!empty($messages)) {
+            echo '<div class="messages">';
+            foreach ($messages as $message) {
+                echo $message;
+            }
+            echo '</div>';
         }
-        print('</div>');
-    }
-    ?>
-    <div class="fon1 tab mt-4 mb-4 shadow rounded" id="quf">
-        <form action="index.php" method="POST" class="row mx-5 my-2 gy-1">
-            <div class="form_item form-group">
-                <label for="formName" style="color: black;">ФИО:</label>
-                <input name="names" class="<?php if ($errors['names']) {print 'error';} ?> form_input _req form-control w-50 shadow bg-white rounded"
-                value="<?php print $values['names']; ?>" placeholder="Введите ФИО" />
-            </div>
-
-            <div class="form_item form-group">
-                <label for="formTel" style="color: black;">Телефон:</label>
-                <input name="phone" class="<?php if ($errors['phone']) {print 'error';} ?> form_input _req form-control w-50 shadow bg-white rounded"
-                value="<?php print $values['phone']; ?>" placeholder="Введите телефон" />
-            </div>
-
-            <div class="form_item form-group">
-                <label for="formEmail" style="color: black;">E-mail:</label>
-                <input name="email" class="<?php if ($errors['email']) {print 'error';} ?> form_input _req _email form-control w-50 shadow bg-white rounded"
-                value="<?php print $values['email']; ?>" placeholder="Введите E-mail" />
-            </div>
-
-            <div class="form_item form-group">
-                <label for="formDate" style="color: black;">Дата рождения:</label>
-                <input type="date" class="<?php if ($errors['date']) {print 'error';} ?> form_input _req form-control w-50 shadow bg-white rounded" name="date" value="<?php print $values['date']; ?>"
-                    min="1900-01-01" max="2024-03-01" id="formDate">
-            </div>
-
-            <div class="form_item form-group">
-                <label style="color: black;">Пол:</label><br>
-                <div class="form-check1 form-check-inline">
-                    <input class="form-check-input" type="radio" name="gender" id="Sex1" value="m" <?php if ($values['gender'] == 'm') {print 'checked';} ?>>
-                    <label class="form-check-label" for="Sex1">Мужской</label>
-                </div>
-                <div class="form-check1 form-check-inline">
-                    <input class="form-check-input" type="radio" name="gender" id="Sex2" value="f" <?php if ($values['gender'] == 'f') {print 'checked';} ?>>
-                    <label class="form-check-label" for="Sex2">Женский</label>
-                </div>
-            </div>            
-
-            <div class="form_item form-group">
-                <label for="multipleLanguages" style="color: black;">Любимый язык программирования:</label>
-                <select multiple class="<?php if ($errors['languages']) {print 'error';} ?> form_input _req form-control w-50 shadow bg-white rounded"
-                id="multipleLanguages" name="languages[]">
-                    <option value="1" <?php if (in_array(1, $values['languages'])) {print 'selected';} ?>>Pascal</option>
-                    <option value="2" <?php if (in_array(2, $values['languages'])) {print 'selected';} ?>>C</option>
-                    <option value="3" <?php if (in_array(3, $values['languages'])) {print 'selected';} ?>>C++</option>
-                    <option value="4" <?php if (in_array(4, $values['languages'])) {print 'selected';} ?>>JavaScript</option>
-                    <option value="5" <?php if (in_array(5, $values['languages'])) {print 'selected';} ?>>PHP</option>          
-                    <option value="6" <?php if (in_array(6, $values['languages'])) {print 'selected';} ?>>Python</option>
-                    <option value="7" <?php if (in_array(7, $values['languages'])) {print 'selected';} ?>>Java</option>
-                    <option value="8" <?php if (in_array(8, $values['languages'])) {print 'selected';} ?>>Haskell</option>
+        ?>
+        <form action="index.php" method="POST">
+            <label>ФИО:
+                <input type="text" name="names" placeholder="Введите ФИО" class="<?php echo $errors['names'] ? 'error' : ''; ?>" value="<?php echo $values['names']; ?>">
+            </label><br>
+            <label>Телефон:
+                <input type="text" name="phone" placeholder="Введите номер телефона" class="<?php echo $errors['phone'] ? 'error' : ''; ?>" value="<?php echo $values['phone']; ?>">
+            </label><br>
+            <label>E-mail:
+                <input type="email" name="email" placeholder="Введите e-mail" class="<?php echo $errors['email'] ? 'error' : ''; ?>" value="<?php echo $values['email']; ?>">
+            </label><br>
+            <label>Дата рождения:
+                <input type="date" name="date" placeholder="дд.мм.гггг" class="<?php echo $errors['date'] ? 'error' : ''; ?>" value="<?php echo $values['date']; ?>">
+            </label><br>
+            <label>Укажите ваш пол:
+                <input type="radio" name="gender" value="M" <?php echo ($values['gender'] == 'M') ? 'checked' : ''; ?>>М
+                <input type="radio" name="gender" value="F" <?php echo ($values['gender'] == 'F') ? 'checked' : ''; ?>>Ж
+            </label><br>
+            <label>Укажите любимые языки программирования:
+                <select name="languages[]" multiple class="<?php echo $errors['languages'] ? 'error' : ''; ?>">
+                    <option value="Pascal" <?php echo in_array('Pascal', $values['languages']) ? 'selected' : ''; ?>>Pascal</option>
+                    <option value="C" <?php echo in_array('C', $values['languages']) ? 'selected' : ''; ?>>C</option>
+                    <option value="C++" <?php echo in_array('C++', $values['languages']) ? 'selected' : ''; ?>>C++</option>
+                    <option value="JavaScript" <?php echo in_array('JavaScript', $values['languages']) ? 'selected' : ''; ?>>JavaScript</option>
+                    <option value="PHP" <?php echo in_array('PHP', $values['languages']) ? 'selected' : ''; ?>>PHP</option>
                 </select>
-            </div>
-
-            <div class="form_item form-group">
-                <label for="formMessage" style="color: black;">Биография:</label>
-                <textarea id="formMessage" name="biography" class="<?php if ($errors['biography']) {print 'error';} ?> form_input _req form-control w-50 shadow bg-white rounded"><?php print $values['biography']; ?></textarea>
-            </div>
-
-            <div class="form_item form-group">
-                <div class="form-check">
-                    <label class="checkbox_label form-check-label" for="agree">С контрактом ознакомлен(а)</label>
-                    <input id="agree" type="checkbox" name="agree" class="<?php if ($errors['agree']) {print 'error';} ?> checkbox_input form-check-input" <?php if ($values['agree']) {print 'checked';} ?>>
-                </div>
-            </div>
-            
-            <div class="form_item form-group">
-                <label class="col-12"><input type="submit" value="Сохранить" name="submit" class="submit btn-dark"></label>
-            </div>
+            </label><br>
+            <label>Биография:
+                <textarea name="biography" placeholder="Расскажите о себе" class="<?php echo $errors['biography'] ? 'error' : ''; ?>"><?php echo $values['biography']; ?></textarea>
+            </label><br>
+            <label>
+                <input type="checkbox" name="agree" <?php echo $values['agree'] ? 'checked' : ''; ?>> С контрактом ознакомлен(а)
+            </label><br>
+            <input type="submit" value="Сохранить">
         </form>
     </div>
 </body>
-
 </html>
