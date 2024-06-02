@@ -26,35 +26,35 @@
             <div class="form_item form-group">
                 <label for="formName" style="color: black;">ФИО:</label>
                 <input name="names" class="<?php if ($errors['names']) {print 'error';} ?> form_input _req form-control w-50 shadow bg-white rounded"
-                value="<?php print $values['names']; ?>" placeholder="Введите ФИО" required />
+                value="<?php print $values['names']; ?>" placeholder="Введите ФИО" />
             </div>
 
             <div class="form_item form-group">
                 <label for="formTel" style="color: black;">Телефон:</label>
                 <input name="phone" class="<?php if ($errors['phone']) {print 'error';} ?> form_input _req form-control w-50 shadow bg-white rounded"
-                value="<?php print $values['phone']; ?>" placeholder="Введите телефон" required />
+                value="<?php print $values['phone']; ?>" placeholder="Введите телефон" />
             </div>
 
             <div class="form_item form-group">
                 <label for="formEmail" style="color: black;">E-mail:</label>
                 <input name="email" class="<?php if ($errors['email']) {print 'error';} ?> form_input _req _email form-control w-50 shadow bg-white rounded"
-                value="<?php print $values['email']; ?>" placeholder="Введите E-mail" required />
+                value="<?php print $values['email']; ?>" placeholder="Введите E-mail" />
             </div>
 
             <div class="form_item form-group">
                 <label for="formDate" style="color: black;">Дата рождения:</label>
                 <input type="date" class="<?php if ($errors['date']) {print 'error';} ?> form_input _req form-control w-50 shadow bg-white rounded" name="date" value="<?php print $values['date']; ?>"
-                    min="1900-01-01" max="2024-03-01" id="formDate" required>
+                    min="1900-01-01" max="2024-03-01" id="formDate">
             </div>
 
             <div class="form_item form-group">
                 <label style="color: black;">Пол:</label><br>
                 <div class="form-check1 form-check-inline">
-                    <input class="form-check-input" type="radio" name="gender" id="Sex1" value="m" <?php if ($values['gender'] == 'm') {print 'checked';} ?> required>
+                    <input class="form-check-input" type="radio" name="gender" id="Sex1" value="m" <?php if ($values['gender'] == 'm') {print 'checked';} ?>>
                     <label class="form-check-label" for="Sex1">Мужской</label>
                 </div>
                 <div class="form-check1 form-check-inline">
-                    <input class="form-check-input" type="radio" name="gender" id="Sex2" value="f" <?php if ($values['gender'] == 'f') {print 'checked';} ?> required>
+                    <input class="form-check-input" type="radio" name="gender" id="Sex2" value="f" <?php if ($values['gender'] == 'f') {print 'checked';} ?>>
                     <label class="form-check-label" for="Sex2">Женский</label>
                 </div>
             </div>            
@@ -62,7 +62,7 @@
             <div class="form_item form-group">
                 <label for="multipleLanguages" style="color: black;">Любимый язык программирования:</label>
                 <select multiple class="<?php if ($errors['languages']) {print 'error';} ?> form_input _req form-control w-50 shadow bg-white rounded"
-                id="multipleLanguages" name="languages[]" required>
+                id="multipleLanguages" name="languages[]">
                     <option value="1" <?php if (in_array(1, $values['languages'])) {print 'selected';} ?>>Pascal</option>
                     <option value="2" <?php if (in_array(2, $values['languages'])) {print 'selected';} ?>>C</option>
                     <option value="3" <?php if (in_array(3, $values['languages'])) {print 'selected';} ?>>C++</option>
@@ -76,13 +76,13 @@
 
             <div class="form_item form-group">
                 <label for="formMessage" style="color: black;">Биография:</label>
-                <textarea id="formMessage" name="biography" class="<?php if ($errors['biography']) {print 'error';} ?> form_input _req form-control w-50 shadow bg-white rounded" required><?php print $values['biography']; ?></textarea>
+                <textarea id="formMessage" name="biography" class="<?php if ($errors['biography']) {print 'error';} ?> form_input _req form-control w-50 shadow bg-white rounded"><?php print $values['biography']; ?></textarea>
             </div>
 
             <div class="form_item form-group">
                 <div class="form-check">
                     <label class="checkbox_label form-check-label" for="agree">С контрактом ознакомлен(а)</label>
-                    <input id="agree" type="checkbox" name="agree" class="<?php if ($errors['agree']) {print 'error';} ?> checkbox_input form-check-input" <?php if ($values['agree']) {print 'checked';} ?> required>
+                    <input id="agree" type="checkbox" name="agree" class="<?php if ($errors['agree']) {print 'error';} ?> checkbox_input form-check-input" <?php if ($values['agree']) {print 'checked';} ?>>
                 </div>
             </div>
             
