@@ -62,3 +62,7 @@ option {
         padding-left: 30%;
     }
 }
+.error {
+    border: 1px solid red;
+}
+
