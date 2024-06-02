@@ -33,25 +33,25 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     if ($errors['email']) {
         setcookie('email_error', '', 100000);
         setcookie('email_value', '', 100000);
-        $messages[] = '<div class="error">Заполните почту.</div>';
+        $messages[] = '<div class="error">Заполните корректный email.</div>';
     }
 
     if ($errors['date']) {
         setcookie('date_error', '', 100000);
         setcookie('date_value', '', 100000);
-        $messages[] = '<div class="error">Заполните дату.</div>';
+        $messages[] = '<div class="error">Заполните дату рождения.</div>';
     }
 
     if ($errors['gender']) {
         setcookie('gender_error', '', 100000);
         setcookie('gender_value', '', 100000);
-        $messages[] = '<div class="error">Заполните пол.</div>';
+        $messages[] = '<div class="error">Укажите пол.</div>';
     }
 
     if ($errors['languages']) {
         setcookie('languages_error', '', 100000);
         setcookie('languages_value', '', 100000);
-        $messages[] = '<div class="error">Заполните языки.</div>';
+        $messages[] = '<div class="error">Выберите любимый язык программирования.</div>';
     }
 
     if ($errors['biography']) {
