@@ -187,7 +187,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
   $user = 'u67309';
   $pass = '1824692';
   $db = new PDO('mysql:host=localhost;dbname=u67309', $user, $pass, array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"));
-  $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
   try {
     $stmt = $db->prepare("INSERT INTO forma (names, phone, email, date, gender, biography) VALUES (?, ?, ?, ?, ?, ?)");
