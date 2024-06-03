@@ -184,8 +184,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     setcookie('agree_error', '', time() - 100000);
   }
 
-  $user = 'db_user';
-  $pass = 'db_pass';
+  $user = 'u67309';
+  $pass = '1824692';
   $db = new PDO('mysql:host=localhost;dbname=db_name', $user, $pass, array(PDO::ATTR_PERSISTENT => true));
 
   try {
