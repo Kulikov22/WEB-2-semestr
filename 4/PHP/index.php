@@ -184,25 +184,36 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     setcookie('agree_error', '', time() - 100000);
   }
 
+ $names = $_POST['names'];
+  $phone = $_POST['phone'];
+  $email = $_POST['email'];
+  $date = $_POST['date'];
+  $gender = $_POST['gender'];
+  $biography = $_POST['biography'];
   $user = 'u67309';
   $pass = '1824692';
   $db = new PDO('mysql:host=localhost;dbname=u67309', $user, $pass, array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"));
+  $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
   try {
-    $stmt = $db->prepare("INSERT INTO forma (names, phone, email, date, gender, biography) VALUES (?, ?, ?, ?, ?, ?)");
-    $stmt->execute(array($_POST['names'], $_POST['phone'], $_POST['email'], $_POST['date'], $_POST['gender'], $_POST['biography']));
+    $stmt = $db->prepare("INSERT INTO application (names,phones,email,dates,gender,biography) VALUES (:names, :phone, :email, :date, :gender, :biography)");
+    $stmt->execute(array('names' => $names, 'phone' => $phone, 'email' => $email, 'date' => $date, 'gender' => $gender, 'biography' => $biography));
+    $applicationId = $db->lastInsertId();
 
-    $user_id = $db->lastInsertId();
-    $stmt = $db->prepare("INSERT INTO langs (user_id, lang) VALUES (?, ?)");
-    foreach ($_POST['languages'] as $language) {
-      $stmt->execute(array($user_id, $language));
+    foreach ($_POST['languages'] as $languageId) {
+      $stmt = $db->prepare("INSERT INTO application_languages (id_lang, id_app) VALUES (:languageId, :applicationId)");
+      $stmt->bindParam(':languageId', $languageId);
+      $stmt->bindParam(':applicationId', $applicationId);
+      $stmt->execute();
     }
+
+    print('Спасибо, форма сохранена.');
   } catch (PDOException $e) {
     print('Error : ' . $e->getMessage());
     exit();
   }
 
   setcookie('save', '1');
-  header('Location: ./');
+  header('Location: index.php');
 }
 ?>
